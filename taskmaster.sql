@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2015 at 06:17 PM
+-- Generation Time: May 20, 2015 at 06:33 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -47,6 +47,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserById`( in user_id int)
 begin
     	select * from Users where id_user = user_id;
     end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectUserBySessionId`(IN `session_id` INT(11))
+    READS SQL DATA
+select * from Users where Usesrs.session_id = session_id$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateSessionIdInUsersTable`(IN `new_session_id` INT(11), IN `email` VARCHAR(50), IN `password` VARCHAR(50))
+    MODIFIES SQL DATA
+Update Users
+set session_id = session_id
+where Users.email = email and Users.password = password$$
 
 DELIMITER ;
 
